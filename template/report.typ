@@ -1,10 +1,12 @@
-#import "@preview/uc3m-thesis:1.0.0": conf
+#import "@preview/udima-thesis:1.0.0": conf
 #import "config/glossary.typ": glossary-entries
 #import "config/gen-ai.typ": genai-declaration
 
 
 #show: conf.with(
   degree: "Grado en Ingeniería Typstática",
+  school: "Ciencias de Typst",
+  department: "Tipado",
   title: "Análisis, diseño, e implementación del mejor Trabajo de Fin de Grado de la historia",
   short-title: "La mejor Memoria de la Historia",
   author: "Nombre Extremadamente Largo e Incómodo de Escribir",
@@ -13,12 +15,12 @@
   thesis-type: "TFG",
   date: datetime(year: 2025, month: 4, day: 20),
   language: "es",
-  format: "ieee",
+  format: "apa",
   style: "fancy",
   license: true,
   double-sided: true,
   flyleaf: true,
-  bibliography-content: bibliography("references.bib", style: "ieee"),
+  bibliography-content: bibliography("references.bib", style: "apa"),
   epigraph: (
     quote: [Cacaaaaaaaaaaaa.],
     author: "Uno que se cagaba",

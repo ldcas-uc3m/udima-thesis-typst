@@ -1,15 +1,13 @@
 # UC3M Thesis Template
 
-A [Typst](https://typst.app/) template for bachelor/master theses at [Universidad Carlos III de Madrid](https://uc3m.es), following [university guidelines](https://uc3m.libguides.com/en/TFG/writing)[^1].
+A [Typst](https://typst.app/) template for bachelor/master theses at [Universidad a Distancia de Madrid](https://udima.es), following the university's guidelines.
 
-The template is based on [ldcas-uc3m/thesis-template](https://github.com/ldcas-uc3m/thesis-template) and [clean-uc3m](https://github.com/JorgeyGari/clean-uc3m-typst-template) (a fork of [clean-dhbw](https://github.com/roland-KA/clean-dhbw-typst-template)).
-
-[^1]: We consider some of the guidelines to be... plain ol' ugly, so we took some liberties in the formatting of headings, headers, footers, captions, colors, etc. If you still want to strictly adhere to the guidelines, set `style` to `"strict"`.
+The template is based on [guluc3m/uc3m-thesis-typst](https://github.com/guluc3m/uc3m-thesis-typst).
 
 
 ## Features
 
-- **Three visual styles**: `fancy` (default), `clean`, and `strict` (university-compliant)
+- **Two visual styles**: `fancy` (default) and `clean`
 - **Easy to understand error messages**
 - **Bilingual**: Spanish (`es`) and English (`en`)
 - **Automatic front matter**: title page, abstract, acknowledgements, table of contents, list of figures/tables/listings, and abbreviations
@@ -29,15 +27,18 @@ For more in-depth information, check the [manual](docs/manual.pdf).
 
 ### Installation
 
+<!--
 #### Via Typst Universe (recommended)
 
 You can initialize a new project from the template with:
 
 ```shell
-typst init @preview/uc3m-thesis my-final-thesis
+typst init @preview/udima-thesis my-final-thesis
 ```
 
 This creates a `my-final-thesis/` directory with all the files needed to get started.
+-->
+
 
 #### Manual installation
 
@@ -48,7 +49,7 @@ just install
 
 Now you can initialize the template with:
 ```
-typst init @local/uc3m-thesis my-final-thesis
+typst init @local/udima-thesis my-final-thesis
 ```
 
 
@@ -86,18 +87,17 @@ You can also use an IDE extension to preview and compile:
 - [Typerino](https://typerino.com/) - Online Typst equation editor
 - [L. Casais - Memorias de p**** madre: Introducción a Typst](https://github.com/rajayonin/typst-intro)
 
-
+<!--
 ### Examples
 Here are some theses written using this template:
 - [J. A. Verde - Procesamiento de señales de encefalograma para la detección de ataques epilépticos](https://github.com/joseaverde/TFG/tree/7ab7c2f6eeb9e70f27b7a67a8807b10a8a5a4152/report)
 - [L. D. Casais - Implementing Interrupts, Timers, and Memory-Mapped I/O in CREATOR](https://github.com/ldcas-uc3m/TFM)
 - [A. Guerrero - Implementación en FPGA del procesador didáctico WepSIM](https://github.com/ALVAROPING1/TFM)
 - [J. A. Verde - Entorno para el modelado y simulación de sistemas electrónicos digitales](https://codeberg.org/joseaverde/TFM)
-
----
+-->
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on commits, formatting, and pull requests.
 
-If you find a bug or have a feature request, please [open an issue](https://github.com/guluc3m/uc3m-thesis-typst/issues).
+If you find a bug or have a feature request, please [open an issue](https://github.com/ldcas-uc3m/udima-thesis-typst/issues).

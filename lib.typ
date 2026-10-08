@@ -7,7 +7,6 @@
 #import "locale.typ" as locale
 #import "utils.typ": *
 #import "arguments.typ": validate-argument
-#import "generative-ai.typ": genai-template
 
 // wrapper to prevent shadowing
 #let bibliography-fn = bibliography
@@ -19,6 +18,8 @@
 /// - title (str): Title of the thesis.
 /// - author (str): Author name.
 /// - degree (str): Degree name (e.g. `"Computer Science and Engineering"`).
+/// - school (str): School (e.g. `"Ciencias de la Salud y de la Educación"`).
+/// - department (str): Department (e.g. `"Educación"`).
 /// - advisors (array): List of advisor names.
 /// - location (str): Presentation location.
 /// - thesis-type (str): Type of thesis (`"TFG"` or `"TFM"`).
@@ -31,23 +32,20 @@
 /// - table-style (str, auto): Style for the table caption, either `"clean"`, `"apa"`, or `"ieee"`. If set to `auto`, uses the default for the main style (`"clean"` for `clean` style, `format` for the rest).
 /// - figure-style (str, auto): Style for the figure caption, either `"clean"`, `"apa"`, or `"ieee"`. If set to `auto`, uses the default for the main style (`"clean"` for `clean` style, `format` for the rest).
 /// - figure-spacing (length, none): Extra spacing to give to figures and tables. If `none`, no extra spacing.
-/// - font (string, auto): Font to use. By default, `"Libertinus Serif`" in all styles except `"strict"`, where it's `"Times New Roman"`. Can't be set with the `"strict"` style.
+/// - font (string, auto): Font to use. By default, `"Times New Roman"`.
 /// - font-titlepage-size (lenght): Font size in the titlepage. Useful when messing with the `font` parameter.
-/// - double-sided (bool): Whether to use double-sided pages. This is not allowed in the `strict` style.
-/// - logo (str): Type of logo (`"old"` or `"new"`).
+/// - double-sided (bool): Whether to use double-sided pages.
 /// - short-title (str): Shorter version of the title, to be displayed in the headers. Only applies if `double-sided` is set to `true`.
 /// - date-format (str, auto): Date format. Use `auto` or specify the format using the [Typst format syntax](https://typst.app/docs/reference/foundations/datetime/#format).
 /// - license (bool): Whether to include the CC BY-NC-ND 4.0 license.
 /// - flyleaf (bool): Whether to include a blank page after the cover.
 /// - epigraph (dictionary, none): A short quote that guided you through the writting of the thesis, your degree, or your life. Consists of `quote` (of type `content`), the body or text itself, `author` (of type `str`), the author of the quote and, optionally, `source` (of type `str`), where the quote was found.
 /// - abstract (dictionary): A short and precise representation of the thesis content. Consists of `body` (of type `content`), the main text, and `keywords`, an array of key terms (of type `str`) (see [IEEE Taxonomy](https://www.ieee.org/content/dam/ieee-org/ieee/web/org/pubs/ieee-taxonomy.pdf)).
-/// - english-abstract (dictionary): An english translation of the abstract. Compulsory for spanish works, invalid for english ones.
 /// - acknowledgements (content, none): Text where you give thanks to everyone that helped you.
 /// - outlines (dictionaty, none): Set of extra outlines to include (`figures`, `tables`, `listings`), and extra custom outlines (`custom`, an array of `content`s -- typically the result of calling `outline`).
 /// - abbreviations (dictionary, content, none): Abbreviations, acronyms and initials used throughout the thesis. You can provide a map (dictionary of strings) or a custom one (`content`).
 /// - appendixes (content, none): Set of appendixes.
 /// - glossary (array, content, none): Glossary entries. If `array` is provided, it will use the `glossarium` library. If content is passed, it will display that content, without applying any styling.
-/// - genai-declaration (dictionary, content): Information about the use of Generative AI in the thesis. You can suply your own `content`, or use the university's template, by suplying a `dictionary`. See the example for more details.
 /// - doc (content): Thesis contents.
 ///
 /// -> content
@@ -55,6 +53,8 @@
   title: none,
   author: none,
   degree: none,
+  school: none,
+  department: none,
   advisors: none,
   location: none,
   thesis-type: none,
@@ -68,22 +68,19 @@
   figure-style: auto,
   figure-spacing: 0.75em,
   font: auto,
-  font-titlepage-size: 16pt,
+  font-titlepage-size: 12pt,
   double-sided: false,
-  logo: "new",
   short-title: none,
   date-format: auto,
   license: true,
   flyleaf: true,
   epigraph: none,
   abstract: none,
-  english-abstract: none,
   acknowledgements: none,
   outlines: none,
   appendixes: none,
   glossary: none,
   abbreviations: none,
-  genai-declaration: none,
   doc,
 ) = {
   // ========================= ARGUMENT VALIDATION ========================== //
@@ -93,6 +90,10 @@
   validate-argument("author", author, target-type: str)
 
   validate-argument("degree", degree, target-type: str)
+
+  validate-argument("school", school, target-type: str)
+
+  validate-argument("department", department, target-type: str)
 
   validate-argument(
     "advisors",
@@ -129,24 +130,19 @@
   validate-argument(
     "style",
     style,
-    possible-values: ("fancy", "clean", "strict"),
+    possible-values: ("fancy", "clean"),
   )
 
   validate-argument(
     "titlepage-style",
     titlepage-style,
-    possible-values: (auto, "fancy", "clean", "strict"),
+    possible-values: (auto, "fancy", "clean"),
   )
 
   validate-argument(
     "table-style",
     table-style,
     possible-values: (auto, "ieee", "apa", "clean"),
-  )
-
-  assert(
-    not (table-style == "clean" and style == "strict"),
-    message: "'strict' style doesn't allow for 'table-style' to be set to 'clean'.",
   )
 
   if table-style == auto {
@@ -157,11 +153,6 @@
     "figure-style",
     figure-style,
     possible-values: (auto, "apa", "ieee", "clean"),
-  )
-
-  assert(
-    not (figure-style == "clean" and style == "strict"),
-    message: "'strict' style doesn't allow for 'figure-style' to be set to 'clean'.",
   )
 
   if figure-style == auto {
@@ -175,31 +166,17 @@
 
   validate-argument("double-sided", double-sided, target-type: bool)
 
-  assert(
-    not (double-sided and style == "strict"),
-    message: "'strict' style doesn't allow for 'double-sided' to be set to `true`.",
-  )
-
   if font == auto {
-    font = if style == "strict" {
-      "Times New Roman"
-    } else { "Libertinus Serif" }
+    font = "Times New Roman"
   }
 
   validate-argument("font", font, target-type: str)
-
-  assert(
-    not (font != auto and style == "strict"),
-    message: "'strict' style doesn't allow for 'font' to be set.",
-  )
 
   validate-argument(
     "font-titlepage-size",
     font-titlepage-size,
     target-type: (length),
   )
-
-  validate-argument("logo", logo, possible-values: ("new", "old"))
 
   validate-argument(
     "short-title",
@@ -228,26 +205,6 @@
     "abstract",
     abstract,
     target-type: dictionary,
-    schema: (
-      body: (target-type: content),
-      keywords: (target-type: ((array, str),), min-len: 2, max-len: 5),
-    ),
-  )
-
-  assert(
-    not (language == "es" and english-abstract == none),
-    message: "`english-abstract` is required for spanish reports",
-  )
-  assert(
-    not (language == "en" and english-abstract != none),
-    message: "`english-abstract` is not needed for english reports",
-  )
-
-  validate-argument(
-    "english-abstract",
-    english-abstract,
-    target-type: if language == "es" { dictionary } else { none },
-    optional: language == "en",
     schema: (
       body: (target-type: content),
       keywords: (target-type: ((array, str),), min-len: 2, max-len: 5),
@@ -299,52 +256,6 @@
     ),
   )
 
-  validate-argument(
-    "genai-declaration",
-    genai-declaration,
-    target-type: (content, dictionary),
-    schema: (
-      usage: (target-type: bool),
-      data-usage: (
-        target-type: dictionary,
-        optional: type(genai-declaration) == dictionary
-          and not genai-declaration.usage,
-        schema: (
-          // true  = YES / used with authorization
-          // false = NO  / not used
-          confidential: (target-type: bool),
-          copyright: (target-type: bool),
-          personal: (target-type: bool),
-          tos: (target-type: bool),
-        ),
-      ),
-      technical-usage: (
-        target-type: dictionary,
-        optional: type(genai-declaration) == dictionary
-          and not genai-declaration.usage,
-        schema: (
-          documentation: (target-type: content, optional: true),
-          review: (target-type: content, optional: true),
-          research: (target-type: content, optional: true),
-          references: (target-type: content, optional: true),
-          summary: (target-type: content, optional: true),
-          translation: (target-type: content, optional: true),
-          assistance-coding: (target-type: content, optional: true),
-          generating-content: (target-type: content, optional: true),
-          optimization: (target-type: content, optional: true),
-          data-processing: (target-type: content, optional: true),
-          idea-inspiration: (target-type: content, optional: true),
-          other: (target-type: content, optional: true),
-        ),
-      ),
-      usage-reflection: (
-        target-type: content,
-        optional: type(genai-declaration) == dictionary
-          and not genai-declaration.usage,
-      ),
-    ),
-  )
-
   // ============================ DOCUMENT SETUP ============================ //
   set document(
     title: title,
@@ -361,7 +272,7 @@
   let in-body = state("in-body", false) // to control heading formatting in/outside of body
   let in-appendix = state("in-appendix", false) // to control heading formatting in the appendixes
 
-  let accent-color = if style == "strict" { black } else { azuluc3m }
+  let accent-color = if style == "strict" { black } else { verdeudima }
 
   /* TEXT */
 
@@ -369,7 +280,7 @@
 
   set par(
     leading: if style == "strict" { 7pt } else { 8pt },
-    spacing: 1.15em,
+    spacing: 1.5em,
     first-line-indent: 1.8em,
     justify: true,
   )
@@ -717,7 +628,7 @@
     paper: "a4",
     margin: if double-sided {
       (y: 2.5cm, inside: 3cm, outside: 2.5cm)
-    } else { (y: 2.5cm, x: 3cm) },
+    } else { 2.5cm },
 
     /* header */
     header: context {
@@ -803,12 +714,12 @@
       date-format
     },
     degree,
+    school,
+    department,
     location,
     advisors,
-    accent-color,
-    if titlepage-style == auto { style } else { titlepage-style },
+    black,
     font-size: font-titlepage-size,
-    logo-type: logo,
     license: license,
   )
 
@@ -859,12 +770,6 @@
   }
 
   make-abstract(abstract, language)
-
-  // english abstract
-  if english-abstract != none {
-    newpage(double-sided)
-    make-abstract(english-abstract, "en")
-  }
 
   /* ACKNOWLEDGEMENTS */
 
@@ -1188,23 +1093,6 @@
   counter(heading).update(0)
 
   if appendixes != none { appendixes }
-
-  /* generative AI declaration */
-  [= #locale.AI-USAGE.title.at(language) <apx:genai>]
-
-  if type(genai-declaration) == content {
-    // custom
-    genai-declaration
-  } else {
-    genai-template(
-      language,
-      style,
-      genai-declaration.at("usage", default: none),
-      genai-declaration.at("data-usage", default: none),
-      genai-declaration.at("technical-usage", default: none),
-      genai-declaration.at("usage-reflection", default: none),
-    )
-  }
 
   // we _would_ need to set this on a new page,
   // but as there are none, it's not needed

@@ -6,8 +6,8 @@
 #show: codly-init.with()
 
 #set document(
-  title: "uc3m-thesis — Documentation",
-  author: "GUL UC3M",
+  title: "udima-thesis — Documentation",
+  author: "Luis Daniel Casais Mezquida",
 )
 
 
@@ -24,7 +24,7 @@
   header: context {
     if counter(page).get().first() > 1 {
       set text(size: 9pt, fill: luma(120))
-      [*uc3m-thesis* v#package_version]
+      [*udima-thesis* v#package_version]
       h(1fr)
       counter(page).display()
       v(-0.5em)
@@ -55,13 +55,13 @@
 
 
 #align(center)[
-  #text(size: 26pt, weight: "bold")[uc3m-thesis]
+  #text(size: 26pt, weight: "bold")[udima-thesis]
   \
   #text(size: 13pt, fill: luma(80))[Template Documentation — v#package_version]
   #v(0.4em)
   #text(
     size: 10pt,
-  )[Universidad Carlos III de Madrid thesis template]
+  )[Universidad a Distancia de Madrid thesis template]
 ]
 
 #v(1.5em)
@@ -75,16 +75,18 @@
 )
 
 A #link("https://typst.app/")[Typst] template for bachelor/master theses at
-#link("https://uc3m.es")[Universidad Carlos III de Madrid], following #link("https://uc3m.libguides.com/en/TFG/writing")[university guidelines].
+#link("https://udima.es")[Universidad a Distancia de Madrid].
 
-The template is based on #link("https://github.com/ldcas-uc3m/thesis-template")[ldcas-uc3m/thesis-template] and #link("https://github.com/JorgeyGari/clean-uc3m-typst-template")[clean-uc3m] (a fork of #link("https://github.com/roland-KA/clean-dhbw-typst-template")[clean-dhbw]).
+The template is based on #link(
+  "https://github.com/guluc3m/udima-thesis-typst",
+)[guluc3m/udima-thesis-typst].
 
 
 
 = Installation
 The recommended way to install it is through #link("https://typst.app/universe/")[Typst Universe]. You can initialize a new project from the template with:
 ```shell
-typst init @preview/uc3m-thesis my-final-thesis
+typst init @preview/udima-thesis my-final-thesis
 ```
 
 This creates a `my-final-thesis/` directory with all the files needed to get
@@ -111,23 +113,22 @@ with `#show: conf.with(...)`.
 == Minimal example
 
 ```typ
-#import "@preview/uc3m-thesis:0.4.0": conf
+#import "@preview/udima-thesis:1.0.0": conf
 
 #show: conf.with(
   title: "My Bachelor Thesis",
   author: "GUL UC3M",
   degree: "Computer Science and Engineering",
   advisors: ("Prof. L",),
-  location: "Leganés, Madrid",
+  location: "Madrid",
   thesis-type: "TFG",
-  date: datetime(year: 2025, month: 6, day: 15),
-  language: "en",
-  format: "ieee",
+  date: datetime(year: 2026, month: 6, day: 15),
+  language: "es",
+  format: "apa",
   abstract: (
     body: [A short description of my thesis.],
     keywords: ("Keyword 1", "Keyword 2", "Keyword 3"),
   ),
-  genai-declaration: (usage: false),
 )
 
 = Introduction
@@ -318,8 +319,8 @@ To reference a glossary term in the body text, use `#gls("key")` (singular) or
 after the `#show: conf.with(...)` call:
 
 ```typ
-#import "@preview/uc3m-thesis:0.4.0": conf
-#import "@preview/glossarium:0.5.9": gls, glspl
+#import "@preview/udima-thesis:1.0.0": conf
+#import "@preview/glossarium:0.5.10": gls, glspl
 
 // In the body:
 The #gls("API") exposes several endpoints.
