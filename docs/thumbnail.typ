@@ -11,9 +11,10 @@
   "Trabajo de Fin de Grado",
   locale.DATE-FMT.at("es"),
   "Grado en Ingeniería Typstática",
-  "Leganés, Madrid",
+  "Ciencias de Typst",
+  "Tipado",
+  "Madrid",
   ("Profesor Cuyos Padres Tenían Visión de Futuro",),
-  azuluc3m,
-  "fancy",
+  verdeudima,
   license: true,
 )

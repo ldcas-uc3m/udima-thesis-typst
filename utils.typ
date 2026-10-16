@@ -3,7 +3,8 @@
 #import "arguments.typ": format-value
 
 
-#let azuluc3m = rgb("#000e78")
+#let verdeudima = rgb("#004d35")
+#let rojoudima = rgb("#ec1d23")
 
 
 

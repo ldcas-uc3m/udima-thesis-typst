@@ -5,6 +5,14 @@
 #import "utils.typ": newpage
 
 
+#let emptyline(count: 1) = {
+  for _ in range(count) {
+    linebreak()
+    parbreak()
+  }
+}
+
+
 /// Prints the titlepage of the document, including its backpage.
 ///
 /// - author (str): Author full name.
@@ -14,6 +22,8 @@
 /// - type-of-thesis (str): Thesis type.
 /// - date-format (str): Format syntax (see https://typst.app/docs/reference/foundations/datetime/#format)
 /// - degree (str): Thesis degree/master.
+/// - school (str): School.
+/// - department (str): Department.
 /// - location (str): Presentation location.
 /// - advisors (array): Array of advisor names (`str`).
 /// - license (bool): Whether to include a CC BY-NC-ND 4.0 license.
@@ -21,7 +31,6 @@
 /// - double-sided (bool): Whether to use double-sided pages.
 /// - title-font (str, auto): Font of the title.
 /// - font-size (lenght): Font size.
-/// - logo-type (str): Type of logo (`"old"` or "`new"`).
 ///
 /// -> content
 #let titlepage(
@@ -32,22 +41,22 @@
   type-of-thesis,
   date-format,
   degree,
+  school,
+  department,
   location,
   advisors,
   accent-color,
-  style,
   license: true,
   title-font: auto,
-  font-size: 16pt,
-  logo-type: "new",
+  font-size: 12pt,
 ) = {
   // general configuration
   set page(
-    margin: (x: if style == "fancy" { 2cm } else { 3cm }, y: 2cm),
+    margin: (x: 0.98in, y: 0.79in),
     header: [],
     footer: [],
   )
-  set par(justify: false, leading: 0.7em)
+  set par(justify: false, leading: 0.5em, spacing: 1.5em)
   show link: set text(black)
 
   set text(size: font-size, fill: accent-color, hyphenate: false)
@@ -57,87 +66,81 @@
   set align(center)
 
   // logo
-  if logo-type == "new" {
-    image(
-      "img/new_uc3m_logo.svg",
-      width: if style == "clean" { 60% } else { 100% },
+  v(.7cm)
+  image("img/logo-udima.jpg", height: 2.5in)
+
+  v(1.7em)
+
+  [UNIVERSIDAD A DISTANCIA DE MADRID]
+  linebreak()
+  [(UDIMA)]
+
+  parbreak()
+
+  emph[#locale.SCHOOL.at(language) #school]
+  linebreak()
+  emph[#locale.DEPARTMENT.at(language) #department]
+
+  parbreak()
+
+  emph(degree)
+
+  parbreak()
+  emptyline(count: 2)
+
+  {
+    set text(size: 14pt)
+
+    text(
+      weight: "semibold",
+      style: "italic",
+      upper(title),
     )
-    v(if style == "fancy" { 3em } else { 2em })
-  } else {
-    image("img/old_uc3m_logo.svg", width: 35%)
-    v(0.5em)
+
+    parbreak()
+    v(-.2em)
+
+    underline(strong(author))
+
+    parbreak()
+
+    emptyline(count: 2)
+
+    v(-.6em)
+
+    strong(upper(type-of-thesis))
+
+    parbreak()
+    v(-.2em)
+
+    // advisors
+    locale.ADVISOR.at(language)
+    parbreak()
+
+    for advisor in advisors {
+      underline(advisor)
+      linebreak()
+    }
+
+    parbreak()
   }
 
-  box(
-    width: if style == "fancy" { 80% } else { 100% },
-    {
-      // degree
-      text(size: 1.2em, weight: "regular", degree + parbreak())
+  emptyline(count: 2)
+  v(-1em)
 
-      // type-of-thesis
-      text(size: 1.2em, style: "italic", type-of-thesis + parbreak())
+  upper(location)
+  linebreak()
 
-      // title
-      text(
-        size: if style == "clean" { 2em } else { 1.6em },
-        weight: if style == "clean" { "semibold" } else { "medium" },
-        quote(title),
-      )
-      parbreak()
+  // date
+  // currently, Typst doesn't support localization for the format syntax
+  if (language != "en" and date-format.contains("[month repr:long]")) {
+    date-format = date-format.replace(
+      "[month repr:long]",
+      locale.MONTHS.at(language).at(date.month() - 1),
+    )
+  }
 
-      // line
-      line(length: 70%, stroke: (paint: accent-color, thickness: 0.7pt))
-      v(0.7em)
-
-      // author
-      text(size: 1.2em, style: "italic", locale.AUTHOR.at(language))
-      linebreak()
-      text(
-        size: 1.3em,
-        weight: if style == "clean" { "semibold" } else { "medium" },
-        author,
-      )
-      parbreak()
-      v(0.7em)
-
-      // advisors
-      text(
-        size: 1.2em,
-        style: "italic",
-        {
-          if advisors.len() > 1 {
-            locale.ADVISORS.at(language)
-          } else { locale.ADVISOR.at(language) }
-        },
-      )
-      linebreak()
-
-      for advisor in advisors {
-        text(size: 1.2em, advisor)
-        linebreak()
-      }
-
-      parbreak()
-      v(1em)
-
-      // location
-      text(size: 1.1em, location)
-      linebreak()
-
-      // date
-      text(size: 1.1em, {
-        // currently, Typst doesn't support localization for the format syntax
-        if (language != "en" and date-format.contains("[month repr:long]")) {
-          date-format = date-format.replace(
-            "[month repr:long]",
-            locale.MONTHS.at(language).at(date.month() - 1),
-          )
-        }
-
-        date.display(date-format)
-      })
-    },
-  )
+  date.display(date-format)
 
   // license
   if license {

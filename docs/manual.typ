@@ -6,8 +6,8 @@
 #show: codly-init.with()
 
 #set document(
-  title: "fancy-uc3m-thesis — Documentation",
-  author: "GUL UC3M",
+  title: "fancy-udima-thesis — Documentation",
+  author: "Luis Daniel Casais Mezquida",
 )
 
 
@@ -24,7 +24,7 @@
   header: context {
     if counter(page).get().first() > 1 {
       set text(size: 9pt, fill: luma(120))
-      [*fancy-uc3m-thesis* v#package_version]
+      [*fancy-udima-thesis* v#package_version]
       h(1fr)
       counter(page).display()
       v(-0.5em)
@@ -55,13 +55,13 @@
 
 
 #align(center)[
-  #text(size: 26pt, weight: "bold")[fancy-uc3m-thesis]
+  #text(size: 26pt, weight: "bold")[fancy-udima-thesis]
   \
   #text(size: 13pt, fill: luma(80))[Template Documentation — v#package_version]
   #v(0.4em)
   #text(
     size: 10pt,
-  )[Universidad Carlos III de Madrid thesis template]
+  )[Universidad a Distancia de Madrid thesis template]
 ]
 
 #v(1.5em)
@@ -75,16 +75,20 @@
 )
 
 A #link("https://typst.app/")[Typst] template for bachelor/master theses at
-#link("https://uc3m.es")[Universidad Carlos III de Madrid], following #link("https://uc3m.libguides.com/en/TFG/writing")[university guidelines].
+#link("https://udima.es")[Universidad a Distancia de Madrid].
 
-The template is based on #link("https://github.com/ldcas-uc3m/thesis-template")[ldcas-uc3m/thesis-template] and #link("https://github.com/JorgeyGari/clean-uc3m-typst-template")[clean-uc3m] (a fork of #link("https://github.com/roland-KA/clean-dhbw-typst-template")[clean-dhbw]).
+The template is based on #link(
+  "https://github.com/guluc3m/fancy-udima-thesis-typst",
+)[guluc3m/fancy-udima-thesis-typst].
 
 
 
 = Installation
-The recommended way to install it is through #link("https://typst.app/universe/")[Typst Universe]. You can initialize a new project from the template with:
+The recommended way to install it is through #link(
+  "https://typst.app/universe/",
+)[Typst Universe]. You can initialize a new project from the template with:
 ```shell
-typst init @preview/fancy-uc3m-thesis my-final-thesis
+typst init @preview/fancy-udima-thesis my-final-thesis
 ```
 
 This creates a `my-final-thesis/` directory with all the files needed to get
@@ -92,7 +96,8 @@ started.
 
 == Manual installation
 
-Clone #link("https://github.com/guluc3m/uc3m-thesis-typst")[the repository], install [Just](https://github.com/casey/just) and run:
+Clone #link("https://github.com/guluc3m/uc3m-thesis-typst")[the repository],
+install [Just](https://github.com/casey/just) and run:
 ```
 just install
 ```
@@ -111,23 +116,22 @@ with `#show: conf.with(...)`.
 == Minimal example
 
 ```typ
-#import "@preview/fancy-uc3m-thesis:0.4.0": conf
+#import "@preview/fancy-udima-thesis:1.0.0": conf
 
 #show: conf.with(
   title: "My Bachelor Thesis",
   author: "GUL UC3M",
   degree: "Computer Science and Engineering",
   advisors: ("Prof. L",),
-  location: "Leganés, Madrid",
+  location: "Madrid",
   thesis-type: "TFG",
-  date: datetime(year: 2025, month: 6, day: 15),
-  language: "en",
-  format: "ieee",
+  date: datetime(year: 2026, month: 6, day: 15),
+  language: "es",
+  format: "apa",
   abstract: (
     body: [A short description of my thesis.],
     keywords: ("Keyword 1", "Keyword 2", "Keyword 3"),
   ),
-  genai-declaration: (usage: false),
 )
 
 = Introduction
@@ -153,7 +157,9 @@ The `abstract` parameter takes a dictionary with the following keys:
   [The abstract text.],
   [`keywords`\*],
   [`array` of `str`],
-  [Between 2 and 5 keywords. For IEE, see #link("https://www.ieee.org/content/dam/ieee-org/ieee/web/org/pubs/ieee-taxonomy.pdf")[IEEE Taxonomy].],
+  [Between 2 and 5 keywords. For IEE, see #link(
+      "https://www.ieee.org/content/dam/ieee-org/ieee/web/org/pubs/ieee-taxonomy.pdf",
+    )[IEEE Taxonomy].],
 )
 
 ```typ
@@ -281,7 +287,9 @@ abbreviations: [
 
 == Glossary
 <sec:glossary>
-The template integrates with #link("https://typst.app/universe/package/glossarium/")[`glossarium`] for automatic glossary and acronym management.
+The template integrates with #link(
+  "https://typst.app/universe/package/glossarium/",
+)[`glossarium`] for automatic glossary and acronym management.
 
 Define your entries in a separate file (e.g. `config/glossary.typ`):
 
@@ -318,8 +326,8 @@ To reference a glossary term in the body text, use `#gls("key")` (singular) or
 after the `#show: conf.with(...)` call:
 
 ```typ
-#import "@preview/fancy-uc3m-thesis:0.4.0": conf
-#import "@preview/glossarium:0.5.9": gls, glspl
+#import "@preview/fancy-udima-thesis:1.0.0": conf
+#import "@preview/glossarium:0.5.10": gls, glspl
 
 // In the body:
 The #gls("API") exposes several endpoints.
@@ -463,7 +471,9 @@ The template offers three visual styles, controlled by the `style` parameter.
 
 == `"fancy"` (default)
 
-An opinionated style inspired by the original #link("https://github.com/ldcas-uc3m/thesis-template")[LaTeX template], with:
+An opinionated style inspired by the original #link(
+  "https://github.com/ldcas-uc3m/thesis-template",
+)[LaTeX template], with:
 - Decorative chapter title pages with a horizontal rule and chapter number/name
   centered
 - Serif headers showing the current chapter name and page number
@@ -475,7 +485,9 @@ An opinionated style inspired by the original #link("https://github.com/ldcas-uc
 
 == `"clean"`
 
-A clean, minimal style inspired by #link("https://github.com/roland-KA/clean-dhbw-typst-template")[clean-dhbw], with:
+A clean, minimal style inspired by #link(
+  "https://github.com/roland-KA/clean-dhbw-typst-template",
+)[clean-dhbw], with:
 - Large chapter number in the background on chapter pages
 - Simple running header showing the chapter name
 - Clean-style figure and table captions
@@ -511,7 +523,8 @@ Tables and figures also have different visual styles. These are automatically
 set depending on the `style` and `format` values, but can be overwritten through
 `table-style` and `figure-style`.
 
-Both `"apa"` and `"ieee"` follow the university guidelines for APA/IEEE format, while the `"clean"` style is more cohesive.
+Both `"apa"` and `"ieee"` follow the university guidelines for APA/IEEE format,
+while the `"clean"` style is more cohesive.
 
 #for style in ("apa", "ieee", "clean") {
   figure(

@@ -1,15 +1,13 @@
 # UC3M Thesis Template
 
-A [Typst](https://typst.app/) template for bachelor/master theses at [Universidad Carlos III de Madrid](https://uc3m.es), following [university guidelines](https://uc3m.libguides.com/en/TFG/writing)[^1].
+A [Typst](https://typst.app/) template for bachelor/master theses at [Universidad a Distancia de Madrid](https://udima.es), following the university's guidelines.
 
-The template is based on [ldcas-uc3m/thesis-template](https://github.com/ldcas-uc3m/thesis-template) and [clean-uc3m](https://github.com/JorgeyGari/clean-uc3m-typst-template) (a fork of [clean-dhbw](https://github.com/roland-KA/clean-dhbw-typst-template)).
-
-[^1]: We consider some of the guidelines to be... plain ol' ugly, so we took some liberties in the formatting of headings, headers, footers, captions, colors, etc. If you still want to strictly adhere to the guidelines, set `style` to `"strict"`.
+The template is a fork of [`fancy-uc3m-thesis`](https://typst.app/universe/package/fancy-uc3m-thesis).
 
 
 ## Features
 
-- **Three visual styles**: `fancy` (default), `clean`, and `strict` (university-compliant)
+- **Two visual styles**: `fancy` (default) and `clean`
 - Easy to understand error messages
 - **Bilingual**: Spanish (`es`) and English (`en`)
 - Support for mandatory generative AI declaration
@@ -26,15 +24,18 @@ For more in-depth information, and the changelog, check the [manual](docs/manual
 
 ### Installation
 
+<!--
 #### Via Typst Universe (recommended)
 
 You can initialize a new project from the template with:
 
 ```shell
-typst init @preview/fancy-uc3m-thesis my-final-thesis
+typst init @preview/fancy-udima-thesis my-final-thesis
 ```
 
 This creates a `my-final-thesis/` directory with all the files needed to get started.
+-->
+
 
 #### Manual installation
 
@@ -45,7 +46,7 @@ just install
 
 Now you can initialize the template with:
 ```
-typst init @local/fancy-uc3m-thesis my-final-thesis
+typst init @local/fancy-udima-thesis my-final-thesis
 ```
 
 
@@ -74,13 +75,13 @@ You can also use an IDE extension to preview and compile:
 
 This repository contains an unofficial thesis template intended to support academic writing and research.
 
-**This template is an independent, community-created project. It is not an official Universidad Carlos III de Madrid (UC3M) publication, has not been approved, reviewed, sponsored, or endorsed by UC3M, and does not represent the university's official thesis formatting requirements.**
+**This template is an independent, community-created project. It is not an official Universidad a Distancia de Madrid (UDIMA) publication, has not been approved, reviewed, sponsored, or endorsed by UDIMA, and does not represent the university's official thesis formatting requirements.**
 
-The UC3M name, logos, and other university visual identifiers are included solely to facilitate the preparation of academic documents associated with the university. Their inclusion does not imply any institutional affiliation, authorization, or endorsement of this template.
+The UDIMA name, logos, and other university visual identifiers are included solely to facilitate the preparation of academic documents associated with the university. Their inclusion does not imply any institutional affiliation, authorization, or endorsement of this template.
 
-The university's name, logos, and visual identity remain subject to their respective rights and applicable terms. Use of this template does not grant permission to use UC3M trademarks or imply that such use is authorized by the university.
+The university's name, logos, and visual identity remain subject to their respective rights and applicable terms. Use of this template does not grant permission to use UDIMA trademarks or imply that such use is authorized by the university.
 
-For official requirements, users should consult the relevant UC3M regulations and guidelines ([TFG](https://uc3m.libguides.com/en/TFG/writing), [TFM](https://uc3m.libguides.com/en/MFP/writing)).
+For official requirements, users should consult the relevant UDIMA regulations and guidelines.
 
 
 ## More information
@@ -96,17 +97,17 @@ For official requirements, users should consult the relevant UC3M regulations an
 - [Typerino](https://typerino.com/) - Online Typst equation editor
 - [L. Casais - Memorias de p**** madre: Introducción a Typst](https://github.com/rajayonin/typst-intro)
 
-
+<!--
 ### Examples
 Here are some theses written using this template:
 - [J. A. Verde - Procesamiento de señales de encefalograma para la detección de ataques epilépticos](https://github.com/joseaverde/TFG/tree/7ab7c2f6eeb9e70f27b7a67a8807b10a8a5a4152/report)
 - [L. D. Casais - Implementing Interrupts, Timers, and Memory-Mapped I/O in CREATOR](https://github.com/ldcas-uc3m/TFM)
 - [A. Guerrero - Implementación en FPGA del procesador didáctico WepSIM](https://github.com/ALVAROPING1/TFM)
 - [J. A. Verde - Entorno para el modelado y simulación de sistemas electrónicos digitales](https://codeberg.org/joseaverde/TFM)
-
+-->
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on commits, formatting, and pull requests.
 
-If you find a bug or have a feature request, please [open an issue](https://github.com/guluc3m/uc3m-thesis-typst/issues).
+If you find a bug or have a feature request, please [open an issue](https://github.com/ldcas-uc3m/udima-thesis-typst/issues).
